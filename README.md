@@ -2,9 +2,9 @@
 
 A Spring Boot REST API that searches GitHub repositories through the GitHub REST API, stores the results in PostgreSQL, and lets you query the stored results by language and star count.
 
-- **Live API:** `https://github-repo-searcher-lsx7.onrender.com`
-- **Swagger UI:** `https://github-repo-searcher-lsx7.onrender.com/swagger-ui/index.html` (the root URL redirects there)
-- **OpenAPI JSON:** `https://github-repo-searcher-lsx7.onrender.com/v3/api-docs`
+- **Live API:** https://github-repo-searcher-lsx7.onrender.com
+- **Swagger UI:** [https://github-repo-searcher-lsx7.onrender.com/swagger-ui/index.html](https://github-repo-searcher-lsx7.onrender.com/swagger-ui/index.html) (the root URL redirects there)
+- **OpenAPI JSON:** [https://github-repo-searcher-lsx7.onrender.com/v3/api-docs](https://github-repo-searcher-lsx7.onrender.com/v3/api-docs)
 - **Postman collection:** [`postman/github-repo-searcher.postman_collection.json`](postman/github-repo-searcher.postman_collection.json)
 
 > The live instance runs on a free tier that sleeps when idle, so the first request after a while can take 30–60 seconds.
