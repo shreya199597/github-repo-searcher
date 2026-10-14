@@ -1,0 +1,16 @@
+# Optional: a local PostgreSQL matching the defaults in application.yml.
+#   docker compose up -d
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: github_searcher
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: github-repo-searcher
+  config:
+    # Local convenience: KEY=value lines in .env (git-ignored) become properties. Ignored if absent.
+    import: optional:file:.env[.properties]
+  datasource:
+    # Defaults match docker-compose.yml. In production, set DB_URL / DB_USERNAME / DB_PASSWORD.
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/github_searcher}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:5}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate   # Flyway owns the schema; Hibernate only checks the entity matches it
+    properties:
+      hibernate:
+        order_by:
+          # PostgreSQL puts NULLs first in DESC order; repos without a date belong at the end
+          default_null_ordering: last
+  flyway:
+    enabled: true
+
+server:
+  port: ${PORT:8080}       # Render and similar hosts supply PORT
+
+github:
+  base-url: ${GITHUB_API_URL:https://api.github.com}
+  token: ${GITHUB_TOKEN:}
+  per-page: ${GITHUB_PER_PAGE:30}
+  connect-timeout: 5s
+  read-timeout: 10s
+
+springdoc:
+  swagger-ui:
+    operations-sorter: method
+    try-it-out-enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

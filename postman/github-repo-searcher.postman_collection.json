@@ -1,0 +1,132 @@
+{
+  "info": {
+    "name": "GitHub Repository Searcher",
+    "description": "Set the baseUrl collection variable to the live URL or http://localhost:8080.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" }
+  ],
+  "item": [
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Search - spring boot, Java, by stars",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/github/search",
+            "body": { "mode": "raw", "raw": "{\n  \"query\": \"spring boot\",\n  \"language\": \"Java\",\n  \"sort\": \"stars\"\n}" }
+          }
+        },
+        {
+          "name": "Search - sort by recently updated",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/github/search",
+            "body": { "mode": "raw", "raw": "{\n  \"query\": \"http client\",\n  \"language\": \"Go\",\n  \"sort\": \"updated\"\n}" }
+          }
+        },
+        {
+          "name": "Search - language with symbols (C++)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/github/search",
+            "body": { "mode": "raw", "raw": "{\n  \"query\": \"game engine\",\n  \"language\": \"C++\",\n  \"sort\": \"forks\"\n}" }
+          }
+        },
+        {
+          "name": "Search - no results",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/github/search",
+            "body": { "mode": "raw", "raw": "{\n  \"query\": \"qzxv-no-such-repo-name-9876\"\n}" }
+          }
+        },
+        {
+          "name": "Error - blank query (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/github/search",
+            "body": { "mode": "raw", "raw": "{\n  \"query\": \"\",\n  \"language\": \"Java\"\n}" }
+          }
+        },
+        {
+          "name": "Error - invalid sort (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/github/search",
+            "body": { "mode": "raw", "raw": "{\n  \"query\": \"spring\",\n  \"sort\": \"popularity\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stored repositories",
+      "item": [
+        {
+          "name": "Java, min 100 stars, by stars",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/github/repositories?language=Java&minStars=100&sort=stars",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "github", "repositories"],
+              "query": [
+                { "key": "language", "value": "Java" },
+                { "key": "minStars", "value": "100" },
+                { "key": "sort", "value": "stars" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "All, by forks",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/github/repositories?sort=forks",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "github", "repositories"],
+              "query": [{ "key": "sort", "value": "forks" }]
+            }
+          }
+        },
+        {
+          "name": "All, by updated, page 2 of 10",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/github/repositories?sort=updated&page=1&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "github", "repositories"],
+              "query": [
+                { "key": "sort", "value": "updated" },
+                { "key": "page", "value": "1" },
+                { "key": "size", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Error - negative minStars (400)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/github/repositories?minStars=-5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "github", "repositories"],
+              "query": [{ "key": "minStars", "value": "-5" }]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
